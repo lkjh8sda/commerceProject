@@ -2,10 +2,9 @@ package com.zerobase.commerceproject.controller;
 
 import com.zerobase.commerceproject.config.JwtAuthenticationProvider;
 import com.zerobase.commerceproject.domain.UserVo;
-import com.zerobase.commerceproject.domain.customer.UserDTO;
+import com.zerobase.commerceproject.domain.UserDTO;
 import com.zerobase.commerceproject.domain.emtity.User;
 import com.zerobase.commerceproject.exception.CustomerException;
-import com.zerobase.commerceproject.service.customer.CustomerService;
 import com.zerobase.commerceproject.service.seller.SellerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
