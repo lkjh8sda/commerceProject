@@ -36,6 +36,9 @@ public class User extends BaseEntity{
     private String verificationCode;
     private boolean verify;
 
+    @Column(columnDefinition ="int default 0")
+    private Integer balance;
+
     public static User from(SignUpForm form){
         return User.builder()
                 .email(form.getEmail().toLowerCase(Locale.ROOT))
