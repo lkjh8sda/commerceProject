@@ -1,12 +1,11 @@
 package com.zerobase.commerceproject.domain.emtity;
 
 import com.zerobase.commerceproject.domain.SignUpForm;
-import com.zerobase.commerceproject.domain.UserType;
+import com.zerobase.commerceproject.domain.user.UserType;
 import lombok.*;
 import org.hibernate.envers.AuditOverride;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 @Entity

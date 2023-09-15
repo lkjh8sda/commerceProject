@@ -3,7 +3,7 @@ package com.zerobase.commerceproject.application;
 import com.zerobase.commerceproject.config.JwtAuthenticationProvider;
 import com.zerobase.commerceproject.domain.SignInForm;
 import com.zerobase.commerceproject.domain.emtity.User;
-import com.zerobase.commerceproject.exception.CustomerException;
+import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.service.common.SignInService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class SignInApplication {
 
     public String loginToken(SignInForm form){
         User user = signInService.findValidUser(form.getEmail(),form.getPassword())
-                .orElseThrow(() -> new CustomerException(LOGIN_CHECK_FAIL));
+                .orElseThrow(() -> new CustomException(LOGIN_CHECK_FAIL));
         return provider.createToken(user.getEmail(), user.getId(), user.getUserType());
     }
 

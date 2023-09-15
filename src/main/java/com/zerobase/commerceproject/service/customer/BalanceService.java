@@ -2,7 +2,7 @@ package com.zerobase.commerceproject.service.customer;
 
 import com.zerobase.commerceproject.domain.ChangeBalanceForm;
 import com.zerobase.commerceproject.domain.emtity.BalanceHistory;
-import com.zerobase.commerceproject.exception.CustomerException;
+import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.exception.ErrorCode;
 import com.zerobase.commerceproject.repository.BalanceHistoryRepository;
 import com.zerobase.commerceproject.repository.CustomerRepository;
@@ -19,8 +19,8 @@ public class BalanceService {
     private final CustomerRepository customerRepository;
 
     //해당 익셉션이 떳을때 롤백 한다는 의미
-    @Transactional(noRollbackFor = {CustomerException.class})
-    public BalanceHistory changeBalance(Long userId, ChangeBalanceForm form) throws CustomerException{
+    @Transactional(noRollbackFor = {CustomException.class})
+    public BalanceHistory changeBalance(Long userId, ChangeBalanceForm form) throws CustomException {
 
         //customerBalanceHistory 값을 가져오는 데 값이 없으면(orElse)
         //0원으로 빌드해준다
@@ -30,11 +30,11 @@ public class BalanceService {
                                 .changeMoney(0)
                                 .currentMoney(0)
                                 .user(customerRepository.findById(userId)
-                                        .orElseThrow(() -> new CustomerException(ErrorCode.NOT_FOUND_USER))
+                                        .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER))
                                 ).build());
 
         if(customerBalanceHistory.getCurrentMoney() + form.getMoney() < 0) {
-            throw new CustomerException(NOT_ENOUGH_BALANCE);
+            throw new CustomException(NOT_ENOUGH_BALANCE);
         }
 
         customerBalanceHistory = BalanceHistory.builder()
