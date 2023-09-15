@@ -1,4 +1,4 @@
-package com.zerobase.commerceproject.domain;
+package com.zerobase.commerceproject.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

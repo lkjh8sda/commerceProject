@@ -3,7 +3,7 @@ package com.zerobase.commerceproject.application;
 import com.zerobase.commerceproject.component.MailComponent;
 import com.zerobase.commerceproject.domain.SignUpForm;
 import com.zerobase.commerceproject.domain.emtity.User;
-import com.zerobase.commerceproject.exception.CustomerException;
+import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.exception.ErrorCode;
 import com.zerobase.commerceproject.service.common.SignUpService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class SignUpApplication {
     public String signUp(SignUpForm form){
 
         if(signUpService.isEmailExist(form.getEmail())){
-            throw new CustomerException(ErrorCode.ALREADY_REGISTER_USE);
+            throw new CustomException(ErrorCode.ALREADY_REGISTER_USE);
         }
 
         String uuid = UUID.randomUUID().toString();

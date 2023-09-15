@@ -2,7 +2,7 @@ package com.zerobase.commerceproject.service.common;
 
 import com.zerobase.commerceproject.domain.SignUpForm;
 import com.zerobase.commerceproject.domain.emtity.User;
-import com.zerobase.commerceproject.exception.CustomerException;
+import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,15 +39,15 @@ public class SignUpService {
     @Transactional
     public void verifyEmail(String uuid){
         User user = this.findByVerificationCode(uuid)
-                .orElseThrow(() -> new CustomerException(NOT_REGISTER_USER));
+                .orElseThrow(() -> new CustomException(NOT_REGISTER_USER));
 
         //이미 증명완료
         if(user.isVerify()){
-            throw new CustomerException(ALREADY_VERIFY);
+            throw new CustomException(ALREADY_VERIFY);
         }
         //인증코드 다름
         if(!user.getVerificationCode().equals(uuid)){
-            throw new CustomerException(WRONG_VERIFICATION);
+            throw new CustomException(WRONG_VERIFICATION);
         }
 
         user.setVerify(true);

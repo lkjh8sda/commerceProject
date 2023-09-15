@@ -1,7 +1,7 @@
 package com.zerobase.commerceproject.config;
 
-import com.zerobase.commerceproject.domain.UserType;
-import com.zerobase.commerceproject.domain.UserVo;
+import com.zerobase.commerceproject.domain.user.UserType;
+import com.zerobase.commerceproject.domain.user.UserVo;
 import com.zerobase.commerceproject.util.Aes256Util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

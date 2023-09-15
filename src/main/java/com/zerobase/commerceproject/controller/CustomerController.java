@@ -2,11 +2,10 @@ package com.zerobase.commerceproject.controller;
 
 import com.zerobase.commerceproject.config.JwtAuthenticationProvider;
 import com.zerobase.commerceproject.domain.ChangeBalanceForm;
-import com.zerobase.commerceproject.domain.UserVo;
-import com.zerobase.commerceproject.domain.UserDTO;
-import com.zerobase.commerceproject.domain.emtity.BalanceHistory;
+import com.zerobase.commerceproject.domain.user.UserVo;
+import com.zerobase.commerceproject.domain.user.UserDTO;
 import com.zerobase.commerceproject.domain.emtity.User;
-import com.zerobase.commerceproject.exception.CustomerException;
+import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.service.customer.BalanceService;
 import com.zerobase.commerceproject.service.customer.CustomerService;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,7 @@ public class CustomerController {
     public ResponseEntity<UserDTO> getInfo(@RequestHeader(name = "X-AUTH-TOKEN") String token){
         UserVo userVo = provider.getUserVo(token);
         User user = customerService.findByIdAndEmail(userVo.getId(), userVo.getEmail())
-                .orElseThrow(() -> new CustomerException(NOT_FOUND_USER));
+                .orElseThrow(() -> new CustomException(NOT_FOUND_USER));
         return ResponseEntity.ok(UserDTO.from(user));
     }
 

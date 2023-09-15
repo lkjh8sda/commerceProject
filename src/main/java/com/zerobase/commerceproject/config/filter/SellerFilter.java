@@ -1,8 +1,7 @@
 package com.zerobase.commerceproject.config.filter;
 
 import com.zerobase.commerceproject.config.JwtAuthenticationProvider;
-import com.zerobase.commerceproject.domain.UserVo;
-import com.zerobase.commerceproject.service.customer.CustomerService;
+import com.zerobase.commerceproject.domain.user.UserVo;
 import com.zerobase.commerceproject.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 
