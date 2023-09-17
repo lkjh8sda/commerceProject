@@ -6,6 +6,7 @@ import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,8 @@ public class SignUpService {
 
     @Transactional
     public String signUp(SignUpForm form) {
+        String encPassword = BCrypt.hashpw(form.getPassword(), BCrypt.gensalt());
+        form.setPassword(encPassword);
         userRepository.save(User.from(form));
         return "가입 신청이 완료되었습니다. 이메일 인증을 완료해주세요";
     }
