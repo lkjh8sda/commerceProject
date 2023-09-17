@@ -6,6 +6,7 @@ import com.zerobase.commerceproject.domain.emtity.User;
 import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.service.common.SignInService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import static com.zerobase.commerceproject.exception.ErrorCode.LOGIN_CHECK_FAIL;

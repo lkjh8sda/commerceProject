@@ -8,4 +8,5 @@ import lombok.Getter;
 public class UserVo {
     private Long id;
     private String email;
+    private String userType;
 }

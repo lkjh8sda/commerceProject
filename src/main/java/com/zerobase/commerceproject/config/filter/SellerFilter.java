@@ -2,6 +2,7 @@ package com.zerobase.commerceproject.config.filter;
 
 import com.zerobase.commerceproject.config.JwtAuthenticationProvider;
 import com.zerobase.commerceproject.domain.user.UserVo;
+import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.service.seller.SellerService;
 import lombok.RequiredArgsConstructor;
 
@@ -9,6 +10,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+
+import static com.zerobase.commerceproject.exception.ErrorCode.NOT_AUTHENTICATED;
 
 @WebFilter(urlPatterns = "/seller/*")
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class SellerFilter implements Filter {
         UserVo userVo = jwtAuthenticationProvider.getUserVo(token);
         sellerService.findByIdAndEmail(userVo.getId(), userVo.getEmail())
                 .orElseThrow(() -> new ServletException("Invalid access"));
+
         chain.doFilter(request,response);
     }
 }
