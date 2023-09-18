@@ -15,6 +15,9 @@ public class OrderHistory extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    private User user;
+
     private String name;
     private String email;
 

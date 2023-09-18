@@ -10,6 +10,7 @@ import com.zerobase.commerceproject.domain.redis.Cart;
 import com.zerobase.commerceproject.domain.user.UserDTO;
 import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.exception.ErrorCode;
+import com.zerobase.commerceproject.repository.CustomerRepository;
 import com.zerobase.commerceproject.repository.OrderHistoryRepository;
 import com.zerobase.commerceproject.service.product.ProductItemService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class OrderApplication {
     private final ProductItemService productItemService;
     private final MailComponent mailComponent;
     private final OrderHistoryRepository orderHistoryRepository;
+    private final CustomerRepository customerRepository;
 
     @Transactional
     public void order(String token, Cart cart){
@@ -70,6 +72,8 @@ public class OrderApplication {
         OrderHistory orderHistory = OrderHistory.builder()
                 .email(userDTO.getEmail())
                 .name(orderName.toString())
+                .user(customerRepository.findById(userDTO.getId())
+                        .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER)))
                 .build();
         orderHistoryRepository.save(orderHistory);
 
