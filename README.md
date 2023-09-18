@@ -30,3 +30,5 @@
 - [x] 주문결제
 - [x] 결제완료 이메일 발송
 
+# 4. ERD
+![commerceProjectErd](https://github.com/lkjh8sda/commerceProject/assets/67781355/c3b1237a-d321-42be-87ac-b28fb2848b1f)
