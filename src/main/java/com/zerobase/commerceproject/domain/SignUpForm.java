@@ -15,4 +15,5 @@ public class SignUpForm {
     private String phone;
     private String verificationCode;
     private String userType;
+    private String address;
 }

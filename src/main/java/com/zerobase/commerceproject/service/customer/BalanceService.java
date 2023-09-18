@@ -18,7 +18,6 @@ public class BalanceService {
     private final BalanceHistoryRepository balanceHistoryRepository;
     private final CustomerRepository customerRepository;
 
-    //해당 익셉션이 떳을때 롤백 한다는 의미
     @Transactional(noRollbackFor = {CustomException.class})
     public BalanceHistory changeBalance(Long userId, ChangeBalanceForm form) throws CustomException {
 

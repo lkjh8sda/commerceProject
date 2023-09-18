@@ -1,13 +1,16 @@
 package com.zerobase.commerceproject.application;
 
 import com.zerobase.commerceproject.client.UserClient;
+import com.zerobase.commerceproject.component.MailComponent;
 import com.zerobase.commerceproject.domain.ChangeBalanceForm;
+import com.zerobase.commerceproject.domain.emtity.OrderHistory;
 import com.zerobase.commerceproject.domain.emtity.ProductItem;
 import com.zerobase.commerceproject.domain.product.AddProductCartForm;
 import com.zerobase.commerceproject.domain.redis.Cart;
 import com.zerobase.commerceproject.domain.user.UserDTO;
 import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.exception.ErrorCode;
+import com.zerobase.commerceproject.repository.OrderHistoryRepository;
 import com.zerobase.commerceproject.service.product.ProductItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ public class OrderApplication {
     private final CartApplication cartApplication;
     private final UserClient userClient;
     private final ProductItemService productItemService;
+    private final MailComponent mailComponent;
+    private final OrderHistoryRepository orderHistoryRepository;
 
     @Transactional
     public void order(String token, Cart cart){
@@ -44,8 +49,9 @@ public class OrderApplication {
                         .message("Order")
                         .money(-finalPrice)
                         .build());
-
+        StringBuilder orderName = new StringBuilder();
         for (Cart.Product product : orderCart.getProducts()){
+            orderName.append(product.getName()+",");
             for (Cart.ProductItem cartItem : product.getItems()){
                 ProductItem productItem = productItemService.getProductItem(cartItem.getId());
                 productItem.setCount(productItem.getCount() - cartItem.getCount());
@@ -53,7 +59,19 @@ public class OrderApplication {
         }
 
         //결제완료 메일발송
+        String email = userDTO.getEmail();
+        String subject = "주문이 완료되었습니다";
+        String text = "<p>주문이 완료되었습니다.</p>";
+               // +"<div><a href='http://localhost:8082/signup/verify?id="+uuid+"'>가입 완료 </a></div>";
 
+        mailComponent.sendMail(email,subject,text);
+
+        //주문 히스토리
+        OrderHistory orderHistory = OrderHistory.builder()
+                .email(userDTO.getEmail())
+                .name(orderName.toString())
+                .build();
+        orderHistoryRepository.save(orderHistory);
 
     }
 
