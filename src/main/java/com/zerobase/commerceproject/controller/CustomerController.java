@@ -36,4 +36,5 @@ public class CustomerController {
 
         return ResponseEntity.ok(balanceService.changeBalance(vo.getId(), form).getCurrentMoney());
     }
+
 }
