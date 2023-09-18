@@ -3,6 +3,7 @@ package com.zerobase.commerceproject.service.product;
 import com.zerobase.commerceproject.domain.emtity.Product;
 import com.zerobase.commerceproject.domain.emtity.ProductItem;
 import com.zerobase.commerceproject.domain.product.AddProductItemForm;
+import com.zerobase.commerceproject.domain.product.UpdateDiscountForm;
 import com.zerobase.commerceproject.domain.product.UpdateProductItemForm;
 import com.zerobase.commerceproject.exception.CustomException;
 import com.zerobase.commerceproject.repository.ProductItemRepository;
@@ -46,6 +47,14 @@ public class ProductItemService {
         productItem.setName(form.getName());
         productItem.setCount(form.getCount());
         productItem.setPrice(form.getPrice());
+        return productItem;
+    }
+
+    @Transactional
+    public ProductItem updateDiscount(Long sellerId, UpdateDiscountForm form){
+        ProductItem productItem = productItemRepository.findById(form.getId())
+                .filter(pi -> pi.getSellerId().equals(sellerId)).orElseThrow(() -> new CustomException(NOT_FOUND_ITEM));
+        productItem.setDiscount(form.getDiscount());
         return productItem;
     }
 

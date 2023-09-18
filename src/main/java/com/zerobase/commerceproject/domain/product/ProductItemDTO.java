@@ -12,6 +12,7 @@ public class ProductItemDTO {
     private Long id;
     private String name;
     private Integer price;
+    private Integer discount;
     private Integer count;
 
     public static ProductItemDTO from(ProductItem item){
@@ -19,6 +20,7 @@ public class ProductItemDTO {
                 .id(item.getId())
                 .name(item.getName())
                 .price(item.getPrice())
+                .discount(item.getDiscount())
                 .count(item.getCount())
                 .build();
     }

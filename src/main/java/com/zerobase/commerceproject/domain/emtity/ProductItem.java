@@ -2,6 +2,7 @@ package com.zerobase.commerceproject.domain.emtity;
 
 import com.zerobase.commerceproject.domain.product.AddProductItemForm;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.Audited;
 
@@ -19,11 +20,15 @@ public class ProductItem extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long sellerId;
+    private String name;
 
     @Audited
-    private String name;
-    @Audited
     private Integer price;
+
+    @ColumnDefault("0")
+    @Audited
+    private Integer discount;
+    @Audited
     private Integer count;
 
     @ManyToOne
@@ -35,6 +40,7 @@ public class ProductItem extends BaseEntity{
                 .sellerId(sellerId)
                 .name(form.getName())
                 .price(form.getPrice())
+                .discount(form.getDiscount())
                 .count(form.getCount())
                 .build();
     }

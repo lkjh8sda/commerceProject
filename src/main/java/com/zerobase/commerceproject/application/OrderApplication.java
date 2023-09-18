@@ -32,7 +32,9 @@ public class OrderApplication {
         UserDTO userDTO = userClient.getCustomerInfo(token).getBody();
 
         int totalPrice = getTotalPrice(cart);
-        if(userDTO.getBalance() < totalPrice){
+        int discount = productItemService.getProductItem(userDTO.getId()).getDiscount();
+        int finalPrice = totalPrice - discount;
+        if(userDTO.getBalance() < finalPrice){
             throw new CustomException(ErrorCode.ORDER_FAIL_NO_MONEY);
         }
 
@@ -40,7 +42,7 @@ public class OrderApplication {
                 ChangeBalanceForm.builder()
                         .from("USER")
                         .message("Order")
-                        .money(-totalPrice)
+                        .money(-finalPrice)
                         .build());
 
         for (Cart.Product product : orderCart.getProducts()){
